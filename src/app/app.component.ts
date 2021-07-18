@@ -11,7 +11,7 @@ import { HomePage } from "../pages/home/home";
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = HomePage;
+  rootPage: string = "HomePage";
 
   pages: Array<{ title: string; component: any }>;
 
@@ -23,7 +23,7 @@ export class MyApp {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
-    this.pages = [{ title: "Home", component: HomePage }];
+    this.pages = [{ title: "Home", component: "HomePage" }];
   }
 
   initializeApp() {
