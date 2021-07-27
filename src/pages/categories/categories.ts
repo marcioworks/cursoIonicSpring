@@ -24,9 +24,7 @@ export class CategoriesPage {
         this.items = response;
         console.log(response);
       },
-      (error) => {
-        console.log(error);
-      }
+      (error) => {}
     );
   }
 }
