@@ -1,13 +1,18 @@
 import { Component } from "@angular/core";
 import { IonicPage, MenuController, NavController } from "ionic-angular";
 import { CredentialsDTO } from "../../models/credentials.dto";
+import { AuthService } from "../../service/auth.service";
 @IonicPage()
 @Component({
   selector: "page-home",
   templateUrl: "home.html",
 })
 export class HomePage {
-  constructor(public navCtrl: NavController, public menu: MenuController) {}
+  constructor(
+    public navCtrl: NavController,
+    public menu: MenuController,
+    public auth: AuthService
+  ) {}
 
   credentials: CredentialsDTO = {
     email: "",
@@ -22,7 +27,12 @@ export class HomePage {
     this.menu.swipeEnable(true);
   }
   login() {
-    console.log(this.credentials);
-    this.navCtrl.setRoot("CategoriesPage");
+    this.auth.authenticate(this.credentials).subscribe(
+      (response) => {
+        console.log(response.headers.get("Authorization"));
+        this.navCtrl.setRoot("CategoriesPage");
+      },
+      (error) => {}
+    );
   }
 }
