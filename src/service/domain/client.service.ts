@@ -10,14 +10,8 @@ export class ClientService {
   constructor(public http: HttpClient, public storage: StorageService) {}
 
   findByEmail(email: string): Observable<ClientDTO> {
-    let token = this.storage.getLocalStorageUser().token;
-    let authHeaders = new HttpHeaders({ Authorization: "Bearer " + token });
-
     return this.http.get<ClientDTO>(
-      `${API_CONFIG.baseUrl}/client/email?email=${email}`,
-      {
-        headers: authHeaders,
-      }
+      `${API_CONFIG.baseUrl}/client/email?email=${email}`
     );
   }
 
