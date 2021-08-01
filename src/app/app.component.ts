@@ -4,6 +4,7 @@ import { StatusBar } from "@ionic-native/status-bar";
 import { SplashScreen } from "@ionic-native/splash-screen";
 
 import { HomePage } from "../pages/home/home";
+import { AuthService } from "../service/auth.service";
 
 @Component({
   templateUrl: "app.html",
@@ -18,7 +19,8 @@ export class MyApp {
   constructor(
     public platform: Platform,
     public statusBar: StatusBar,
-    public splashScreen: SplashScreen
+    public splashScreen: SplashScreen,
+    public auth: AuthService
   ) {
     this.initializeApp();
 
@@ -26,6 +28,7 @@ export class MyApp {
     this.pages = [
       { title: "Profile", component: "ProfilePage" },
       { title: "Categories", component: "CategoriesPage" },
+      { title: "Logout", component: "" },
     ];
   }
 
@@ -38,9 +41,14 @@ export class MyApp {
     });
   }
 
-  openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
-    this.nav.setRoot(page.component);
+  openPage(page: { title: string; component: string }) {
+    switch (page.title) {
+      case "Logout":
+        this.auth.logOut();
+        this.nav.setRoot("HomePage");
+        break;
+      default:
+        this.nav.setRoot(page.component);
+    }
   }
 }
