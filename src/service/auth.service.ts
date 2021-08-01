@@ -18,6 +18,17 @@ export class AuthService {
     });
   }
 
+  refreshToken() {
+    return this.http.post(
+      `${API_CONFIG.baseUrl}/auth/refresh_token`,
+      {},
+      {
+        observe: "response",
+        responseType: "text",
+      }
+    );
+  }
+
   successfulLogin(Authorization: string) {
     let tok = Authorization.substring(7);
 
