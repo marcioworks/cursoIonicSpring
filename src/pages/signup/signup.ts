@@ -2,6 +2,10 @@ import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { validateLocaleAndSetLanguage } from "typescript";
+import { CityDto } from "../../models/city.dto";
+import { StateDto } from "../../models/state.dto";
+import { CityService } from "../../service/domain/city.service";
+import { StateService } from "../../service/domain/state.service";
 
 @IonicPage()
 @Component({
@@ -10,10 +14,15 @@ import { validateLocaleAndSetLanguage } from "typescript";
 })
 export class SignupPage {
   formGroup: FormGroup;
+  states: StateDto;
+  cities: CityDto;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    public formBuilder: FormBuilder
+    public formBuilder: FormBuilder,
+    public cityService: CityService,
+    public stateService: StateService
   ) {
     this.formGroup = formBuilder.group({
       name: [
@@ -48,6 +57,27 @@ export class SignupPage {
     });
   }
 
+  ionViewDidLoad() {
+    this.stateService.findAll().subscribe(
+      (response) => {
+        this.states = response;
+        this.formGroup.controls.stateId.setValue(this.states[0].id);
+        this.updateCities();
+      },
+      (error) => {}
+    );
+  }
+
+  updateCities() {
+    let state_id = this.formGroup.value.stateId;
+    this.cityService.findAll(state_id).subscribe(
+      (response) => {
+        this.cities = response;
+        this.formGroup.controls.cityId.setValue(null);
+      },
+      (error) => {}
+    );
+  }
   signupUser() {
     console.log("enviado");
   }
