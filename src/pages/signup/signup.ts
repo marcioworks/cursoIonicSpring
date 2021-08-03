@@ -1,10 +1,16 @@
 import { Component } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { IonicPage, NavController, NavParams } from "ionic-angular";
+import {
+  AlertController,
+  IonicPage,
+  NavController,
+  NavParams,
+} from "ionic-angular";
 import { validateLocaleAndSetLanguage } from "typescript";
 import { CityDto } from "../../models/city.dto";
 import { StateDto } from "../../models/state.dto";
 import { CityService } from "../../service/domain/city.service";
+import { ClientService } from "../../service/domain/client.service";
 import { StateService } from "../../service/domain/state.service";
 
 @IonicPage()
@@ -22,7 +28,9 @@ export class SignupPage {
     public navParams: NavParams,
     public formBuilder: FormBuilder,
     public cityService: CityService,
-    public stateService: StateService
+    public stateService: StateService,
+    public clientService: ClientService,
+    public alertCtrl: AlertController
   ) {
     this.formGroup = formBuilder.group({
       name: [
@@ -79,6 +87,28 @@ export class SignupPage {
     );
   }
   signupUser() {
-    console.log("enviado");
+    this.clientService.insert(this.formGroup.value).subscribe(
+      (reponse) => {
+        this.showInsertOk();
+      },
+      (error) => {}
+    );
+  }
+
+  showInsertOk() {
+    let alert = this.alertCtrl.create({
+      title: "Sucesso!",
+      message: "Usuário Cadastrado com Sucesso!",
+      enableBackdropDismiss: false,
+      buttons: [
+        {
+          text: "OK",
+          handler: () => {
+            this.navCtrl.pop();
+          },
+        },
+      ],
+    });
+    alert.present();
   }
 }
