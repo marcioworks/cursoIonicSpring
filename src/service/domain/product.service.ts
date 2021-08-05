@@ -1,6 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { Observable } from "rxjs/Rx";
 import { API_CONFIG } from "../../config/api.config";
 
 @Injectable()
@@ -11,5 +11,12 @@ export class ProductService {
     return this.http.get(
       `${API_CONFIG.baseUrl}/product/?categories=${category_id}`
     );
+  }
+
+  getSmallImageFromBucket(id: string): Observable<any> {
+    let url = `${API_CONFIG.baseBucketUrl}/prod${id}-small.jpg`;
+    return this.http.get(url, {
+      responseType: "blob",
+    });
   }
 }
