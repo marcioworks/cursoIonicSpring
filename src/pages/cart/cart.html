@@ -6,13 +6,38 @@
 
 <ion-content padding>
   <ion-list>
-    <button ion-item *ngFor="let item of items">
+    <ion-item ion-item *ngFor="let item of items">
       <ion-thumbnail item-start>
         <img [src]="item.product.imageUrl || 'assets/imgs/prod.jpg'" />
       </ion-thumbnail>
       <h2>{{item.product.name}}</h2>
       <p>{{item.product.price | currency}}</p>
-      <h2>{{item.quantity}}</h2>
-    </button>
+      <ion-icon
+        class="inline"
+        name="add-circle"
+        color="primary"
+        (click)="increaseItems(item.product)"
+      ></ion-icon>
+      <h2 class="inline">{{item.quantity}}</h2>
+      <ion-icon
+        name="remove-circle"
+        color="primary"
+        (click)="decreaseItems(item.product)"
+      ></ion-icon>
+      <ion-icon
+        name="trash"
+        item-end
+        color="danger"
+        (click)="removeItem(item.product)"
+      ></ion-icon>
+    </ion-item>
+    <ion-item *ngIf="total() > 0">
+      <h1>Total</h1>
+      <h1 item-end>R$ {{total()}}</h1>
+    </ion-item>
+    <ion-item *ngIf="total() <= 0">
+      <h1>Seu carrinho está vazio</h1>
+    </ion-item>
   </ion-list>
+  <button ion-button block (click)="goOn()">Continuar Comprando</button>
 </ion-content>
