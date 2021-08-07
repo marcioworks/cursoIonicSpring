@@ -26,7 +26,7 @@ export class ProfilePage {
     if (user && user.email) {
       this.clientService.findByEmail(user.email).subscribe(
         (response) => {
-          this.client = response;
+          this.client = response as ClientDTO;
           this.getImageIfExists();
         },
         (error) => {
@@ -38,7 +38,6 @@ export class ProfilePage {
     } else {
       this.navCtrl.setRoot("HomePage");
     }
-    console.log("ionViewDidLoad ProfilePage");
   }
 
   getImageIfExists() {

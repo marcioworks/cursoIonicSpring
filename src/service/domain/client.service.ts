@@ -9,10 +9,8 @@ import { StorageService } from "../storage.service";
 export class ClientService {
   constructor(public http: HttpClient, public storage: StorageService) {}
 
-  findByEmail(email: string): Observable<ClientDTO> {
-    return this.http.get<ClientDTO>(
-      `${API_CONFIG.baseUrl}/client/email?email=${email}`
-    );
+  findByEmail(email: string) {
+    return this.http.get(`${API_CONFIG.baseUrl}/client/email?email=${email}`);
   }
 
   getImageFromBucket(id: string): Observable<any> {
