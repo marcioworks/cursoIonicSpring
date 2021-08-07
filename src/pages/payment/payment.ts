@@ -28,6 +28,7 @@ export class PaymentPage {
 
   nextPage() {
     this.pedido.payment = this.formGroup.value;
+    this.navCtrl.push("OrderConfirmationPage", { pedido: this.pedido });
     console.log(this.pedido);
   }
 }
