@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from "ionic-angular";
 import { CategoryDto } from "../../models/category.dto";
 import { CategoryService } from "../../service/domain/category.service";
 import { API_CONFIG } from "../../config/api.config";
+import { LoadingController } from "ionic-angular";
 @IonicPage()
 @Component({
   selector: "page-categories",
