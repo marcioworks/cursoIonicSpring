@@ -8,9 +8,9 @@ import { ProductDTO } from "../../models/product.dto";
 export class ProductService {
   constructor(public http: HttpClient) {}
 
-  findByCategory(category_id) {
+  findByCategory(category_id, page: number = 0, linesPerPage: number = 24) {
     return this.http.get(
-      `${API_CONFIG.baseUrl}/product/?categories=${category_id}`
+      `${API_CONFIG.baseUrl}/product?categories=${category_id}&page=${page}&linesPerPage=${linesPerPage}`
     );
   }
 

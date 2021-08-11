@@ -11,7 +11,8 @@ import { ProductService } from "../../service/domain/product.service";
   templateUrl: "product.html",
 })
 export class ProductPage {
-  items: ProductDTO[];
+  items: ProductDTO[] = [];
+  page: number = 0;
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -25,19 +26,24 @@ export class ProductPage {
   loadData() {
     let category_id = this.navParams.get("category_id");
     let loader = this.presentLoading();
-    this.productService.findByCategory(category_id).subscribe(
+    this.productService.findByCategory(category_id, this.page, 10).subscribe(
       (response) => {
-        this.items = response["content"];
-        this.loadImageUrl();
+        console.log(response);
+        let start = this.items.length;
+        this.items = this.items.concat(response["content"]);
+        let end = this.items.length - 1;
         loader.dismiss();
+        this.loadImageUrl(start, end);
+        console.log(this.page);
+        console.log(this.items);
       },
       (error) => {
         loader.dismiss();
       }
     );
   }
-  loadImageUrl() {
-    for (var i = 0; i < this.items.length; i++) {
+  loadImageUrl(start, end) {
+    for (var i = start; i <= end; i++) {
       let item = this.items[i];
       this.productService.getSmallImageFromBucket(item.id).subscribe(
         (response) => {
@@ -60,8 +66,19 @@ export class ProductPage {
     return loading;
   }
   doRefresh(event) {
+    this.page = 0;
+    this.items = [];
     this.loadData();
 
+    setTimeout(() => {
+      event.complete();
+    }, 1000);
+  }
+
+  doInfinity(event) {
+    this.page++;
+    console.log("page: ", this.page);
+    this.loadData();
     setTimeout(() => {
       event.complete();
     }, 1000);
