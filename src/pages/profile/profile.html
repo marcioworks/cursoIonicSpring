@@ -31,6 +31,12 @@
       >
         Camera
       </button>
+      <button *ngIf="picture" ion-button block (click)="sendPicture()">
+        Enviar Imagem
+      </button>
+      <button *ngIf="picture" ion-button block (click)="cancel()">
+        Descartar Imagem
+      </button>
     </ion-item>
   </ion-card>
 </ion-content>

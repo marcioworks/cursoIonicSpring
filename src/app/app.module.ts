@@ -15,6 +15,7 @@ import { ClientService } from "../service/domain/client.service";
 import { AuthInterceptorProvider } from "../interceptors/auth-intereceptor";
 import { ProductService } from "../service/domain/product.service";
 import { CartService } from "../service/domain/cart.service";
+import { ImageUtilService } from "../service/image-util.service";
 
 @NgModule({
   declarations: [MyApp],
@@ -33,6 +34,7 @@ import { CartService } from "../service/domain/cart.service";
     ClientService,
     ProductService,
     CartService,
+    ImageUtilService,
   ],
 })
 export class AppModule {}
