@@ -55,8 +55,10 @@ export class OrderConfirmationPage {
   }
 
   checkout() {
+    console.log("aqui");
     this.pedidoService.insert(this.pedido).subscribe(
       (response) => {
+        console.log(response);
         this.cartService.createOrClearCart();
         this.codPedido = this.extractId(response.headers.get("location"));
       },
